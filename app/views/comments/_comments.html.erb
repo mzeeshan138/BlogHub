@@ -1,0 +1,12 @@
+<% if comments.any? %>
+  <ul>
+    <% comments.each do |comment| %>
+      <li>
+        <p><strong><%= comment.user.name %></strong></p>
+        <%= simple_format(comment.body) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No comments yet.</p>
+<% end %>

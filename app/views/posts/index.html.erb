@@ -1,0 +1,13 @@
+<h1>Published posts</h1>
+
+<p><%= link_to "Create a post", new_post_path %></p>
+
+<% if @posts.any? %>
+  <ul>
+    <% @posts.each do |post| %>
+      <li><%= link_to post.title, post_path(post) %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No published posts yet.</p>
+<% end %>

@@ -6,7 +6,7 @@ class Post < ApplicationRecord
 
     has_many :likes, as: :likeable
 
-    validates :title, presence: true, uniqueness: true, length: { maximum: 8 }, format: { with: /\A[a-zA-Z]+\z/ }
+    validates :title, presence: true, uniqueness: true
 
     validates :description, presence: true
 end

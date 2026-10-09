@@ -1,0 +1,5 @@
+<div id="published_toggle">
+  <p>Status: <%= post.published? ? "Published" : "Draft" %></p>
+  <%= button_to(post.published? ? "Unpublish" : "Publish",
+                toggle_published_post_path(post), method: :patch) %>
+</div>
