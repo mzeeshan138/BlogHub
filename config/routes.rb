@@ -11,6 +11,15 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :comments
+  resources :articles
+  resources :article_comments
+  resources :users
+  resources :groups
+  resources :user_groups
+  resources :likes
+  resources :attachments
+
   root "posts#index"
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
