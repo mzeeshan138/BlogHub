@@ -1,13 +1,11 @@
-<h1>Published posts</h1>
+<% content_for :title, t("posts.index.title") %>
 
-<p><%= link_to "Create a post", new_post_path %></p>
+<h1><%= t("posts.index.title") %></h1>
+
+<p><%= link_to t("posts.new.link"), new_post_path %></p>
 
 <% if @posts.any? %>
-  <ul>
-    <% @posts.each do |post| %>
-      <li><%= link_to post.title, post_path(post) %></li>
-    <% end %>
-  </ul>
+  <%= render partial: "post", collection: @posts, layout: "post_card", spacer_template: "post_spacer" %>
 <% else %>
-  <p>No published posts yet.</p>
+  <p><%= t("posts.index.empty") %></p>
 <% end %>

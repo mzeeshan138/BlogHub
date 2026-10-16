@@ -29,3 +29,29 @@
 
 en:
   hello: "Hello world"
+  navigation:
+    label: "Main navigation"
+    home: "Blog home"
+  layout:
+    footer: "A place for thoughtful posts."
+  posts:
+    index:
+      title: "Published posts"
+      empty: "No published posts yet."
+    new:
+      title: "New post"
+      link: "Create a post"
+    edit:
+      title: "Edit post"
+    by_author: "By %{author}"
+    comments: "Comments"
+    actions:
+      edit: "Edit"
+      delete: "Delete"
+      delete_confirm: "Delete this post?"
+    status:
+      label: "Status"
+      published: "Published"
+      draft: "Draft"
+      publish: "Publish"
+      unpublish: "Unpublish"

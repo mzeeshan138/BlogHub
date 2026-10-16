@@ -24,6 +24,19 @@
   </head>
 
   <body>
-    <%= yield %>
+    <header>
+      <nav aria-label="<%= t("navigation.label") %>">
+        <%= link_to t("navigation.home"), root_path %>
+        <%= link_to t("posts.new.link"), new_post_path %>
+      </nav>
+    </header>
+
+    <main>
+      <% if notice.present? %><p role="status"><%= notice %></p><% end %>
+      <% if alert.present? %><p role="alert"><%= alert %></p><% end %>
+      <%= yield %>
+    </main>
+
+    <footer><p><%= t("layout.footer") %></p></footer>
   </body>
 </html>

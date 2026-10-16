@@ -1,17 +1,20 @@
+<% content_for :title, @post.title %>
+
 <h1><%= @post.title %></h1>
 <p><%= simple_format(@post.description) %></p>
-<p>By <%= @post.user.name %></p>
+<p><%= t("posts.by_author", author: @post.user.name) %></p>
+<p><%= publication_status(@post) %></p>
 
 <%= render "published_toggle", post: @post %>
 
 <p>
-  <%= link_to "Edit", edit_post_path(@post) %> |
-  <%= button_to "Delete", post_path(@post), method: :delete,
-                form: { data: { turbo_confirm: "Delete this post?" } } %>
-  <%= link_to "All published posts", posts_path %>
+  <%= link_to t("posts.actions.edit"), edit_post_path(@post) %> |
+  <%= button_to t("posts.actions.delete"), post_path(@post), method: :delete,
+                form: { data: { turbo_confirm: t("posts.actions.delete_confirm") } } %>
+  <%= link_to t("posts.index.title"), posts_path %>
 </p>
 
 <section>
-  <h2>Comments</h2>
+  <h2><%= t("posts.comments") %></h2>
   <%= render "comments/comments", comments: @comments %>
 </section>
