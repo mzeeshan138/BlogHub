@@ -1,11 +1,39 @@
 <% content_for :title, t("posts.index.title") %>
 
-<h1><%= t("posts.index.title") %></h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <p class="text-uppercase text-primary fw-semibold mb-1">Latest stories</p>
+    <h1 class="mb-0"><%= t("posts.index.title") %></h1>
+  </div>
 
-<p><%= link_to t("posts.new.link"), new_post_path %></p>
+  <% if user_signed_in? %>
+    <%= link_to "Create Post", new_post_path, class: "btn btn-primary" %>
+  <% end %>
+</div>
 
 <% if @posts.any? %>
-  <%= render partial: "post", collection: @posts, layout: "post_card", spacer_template: "post_spacer" %>
+  <div class="row g-4">
+    <% @posts.each do |post| %>
+      <div class="col-md-6 col-xl-4">
+        <article class="card h-100 shadow-sm border-0">
+          <div class="card-body d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <span class="badge bg-success-subtle text-success-emphasis"><%= publication_status(post) %></span>
+              <small class="text-muted"><%= post.created_at.strftime("%b %d, %Y") %></small>
+            </div>
+
+            <h2 class="h4 card-title"><%= link_to post.title, post_path(post), class: "text-decoration-none text-dark" %></h2>
+            <p class="card-text text-secondary flex-grow-1"><%= truncate(post.description, length: 170) %></p>
+
+            <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+              <small class="text-muted">By <%= post.user.name %></small>
+              <%= link_to "Read more", post_path(post), class: "btn btn-sm btn-outline-primary" %>
+            </div>
+          </div>
+        </article>
+      </div>
+    <% end %>
+  </div>
 <% else %>
-  <p><%= t("posts.index.empty") %></p>
+  <div class="alert alert-light border">No published posts yet.</div>
 <% end %>

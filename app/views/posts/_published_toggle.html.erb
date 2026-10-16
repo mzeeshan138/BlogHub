@@ -1,5 +1,11 @@
-<div id="published_toggle">
-  <p><%= t("posts.status.label") %>: <%= publication_status(post) %></p>
+<div id="published_toggle" class="d-flex align-items-center justify-content-between gap-3 border rounded p-3 bg-body-tertiary mb-4">
+  <div>
+    <div class="fw-semibold"><%= t("posts.status.label") %></div>
+    <small class="text-muted"><%= publication_status(post) %></small>
+  </div>
+
   <%= button_to(post.published? ? t("posts.status.unpublish") : t("posts.status.publish"),
-                toggle_published_post_path(post), method: :patch) %>
+                toggle_published_post_path(post),
+                method: :patch,
+                class: "btn #{post.published? ? 'btn-outline-warning' : 'btn-success'}") %>
 </div>

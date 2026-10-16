@@ -68,3 +68,5 @@ end
 gem "json", "< 3.0"
 
 gem "fiddle", "~> 1.1"
+
+gem "devise", "~> 5.0"
