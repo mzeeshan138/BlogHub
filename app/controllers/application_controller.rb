@@ -1,11 +1,13 @@
 class ApplicationController < ActionController::Base
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
+  include Pundit::Authorization
+
   allow_browser versions: :modern
 
   before_action :require_authentication, unless: :devise_controller?
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-  # Changes to the importmap will invalidate the etag for HTML responses
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   stale_when_importmap_changes
 
   private
@@ -21,7 +23,12 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:name])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :role])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :role])
+  end
+
+  def user_not_authorized
+    flash[:alert] = "You are not authorized to perform this action."
+    redirect_back(fallback_location: root_path)
   end
 end

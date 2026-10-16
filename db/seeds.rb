@@ -7,3 +7,42 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+User.find_or_create_by!(email: "admin.rails.blog@example.com") do |user|
+  user.name = "Admin User"
+  user.password = "password123"
+  user.password_confirmation = "password123"
+  user.role = "admin"
+end
+
+User.find_or_create_by!(email: "author.rails.blog@example.com") do |user|
+  user.name = "Author User"
+  user.password = "password123"
+  user.password_confirmation = "password123"
+  user.role = "author"
+end
+
+User.find_or_create_by!(email: "user.rails.blog@example.com") do |user|
+  user.name = "Regular User"
+  user.password = "password123"
+  user.password_confirmation = "password123"
+  user.role = "user"
+end
+
+if Post.count.zero?
+  author = User.find_by!(email: "author.rails.blog@example.com")
+
+  Post.create!(
+    title: "Welcome to the Blog",
+    description: "This is a published sample post for the blog.",
+    published: true,
+    user: author
+  )
+
+  Post.create!(
+    title: "Draft Post Example",
+    description: "This is a private draft post that only the author or admin can see.",
+    published: false,
+    user: author
+  )
+end
