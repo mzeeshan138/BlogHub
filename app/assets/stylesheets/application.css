@@ -8,3 +8,28 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+.comment-thread {
+  display: grid;
+  gap: 1rem;
+}
+
+.comment-card {
+  padding: 1rem;
+  border: 1px solid #dee2e6;
+  border-radius: 0.75rem;
+  background: #fff;
+}
+
+.comment-replies {
+  display: grid;
+  gap: 0.75rem;
+  margin-left: 1.25rem;
+  padding-left: 1rem;
+  border-left: 2px solid #dee2e6;
+}
+
+.comment-reply-form summary {
+  width: fit-content;
+  cursor: pointer;
+}

@@ -12,7 +12,7 @@ class PostsController < ApplicationController
 
   def show
     authorize @post
-    @comments = @post.comments.includes(:user).order(created_at: :asc)
+    @comments = @post.comments.where(parent_comment_id: nil).includes(:user).order(created_at: :asc)
   end
 
   def new

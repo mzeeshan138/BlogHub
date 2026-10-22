@@ -5,6 +5,7 @@ class CommentsController < ApplicationController
   def create
     @post = Post.find(params[:post_id])
     @comment = @post.comments.new(comment_params)
+    @comment.parent_comment = @post.comments.find(params[:parent_comment_id]) if params[:parent_comment_id].present?
     @comment.user = current_user
 
     authorize @comment

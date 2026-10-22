@@ -1,0 +1,10 @@
+<%= form_with model: [post, Comment.new], local: true, class: "comment-form" do |form| %>
+  <% if parent_comment %>
+    <%= hidden_field_tag :parent_comment_id, parent_comment.id %>
+    <%= form.label :body, "Write a reply", class: "form-label" %>
+  <% else %>
+    <%= form.label :body, "Add a comment", class: "form-label" %>
+  <% end %>
+  <%= form.text_area :body, rows: 3, class: "form-control mb-2", required: true %>
+  <%= form.submit(parent_comment ? "Post reply" : "Post comment", class: "btn btn-primary btn-sm") %>
+<% end %>

@@ -39,13 +39,9 @@
   <h2 class="h3 mb-3">Comments</h2>
 
   <% if user_signed_in? %>
-    <%= form_with model: [@post, Comment.new], local: true, class: "mb-4" do |form| %>
-      <div class="mb-3">
-        <%= form.label :body, "Add a comment", class: "form-label" %>
-        <%= form.text_area :body, rows: 3, class: "form-control", required: true %>
-      </div>
-      <%= form.submit "Post comment", class: "btn btn-primary" %>
-    <% end %>
+    <div class="mb-4">
+      <%= render "comments/form", post: @post, parent_comment: nil %>
+    </div>
   <% else %>
     <div class="alert alert-info">Please sign in to comment on posts.</div>
   <% end %>
