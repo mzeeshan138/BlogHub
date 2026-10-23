@@ -12,14 +12,14 @@
 
   <div class="mt-2"><%= simple_format(comment.body) %></div>
 
-  <% if user_signed_in? %>
+  <% if user_signed_in? && comment.nesting_level < Comment::MAX_NESTING_LEVEL %>
     <details class="comment-reply-form mt-3">
       <summary class="btn btn-sm btn-outline-secondary">Reply</summary>
       <div class="mt-3">
         <%= render "comments/form", post: comment.post, parent_comment: comment %>
       </div>
     </details>
-  <% else %>
+  <% elsif !user_signed_in? && comment.nesting_level < Comment::MAX_NESTING_LEVEL %>
     <%= link_to "Sign in to reply", new_user_session_path, class: "btn btn-sm btn-link px-0" %>
   <% end %>
 
