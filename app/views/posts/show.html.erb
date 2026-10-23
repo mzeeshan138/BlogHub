@@ -22,7 +22,7 @@
     </div>
 
     <div class="fs-5 lh-lg text-secondary mb-4">
-      <%= simple_format(@post.description) %>
+      <%= @post.description %>
     </div>
 
     <% if user_signed_in? && policy(@post).toggle_published? %>

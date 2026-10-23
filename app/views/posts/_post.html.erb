@@ -1,6 +1,6 @@
 <%# locals: (post:, post_counter: nil) %>
 <article class="post-preview" data-post-number="<%= post_counter.to_i + 1 %>">
   <h2><%= link_to post.title, post_path(post) %></h2>
-  <p><%= truncate(post.description, length: 180) %></p>
+  <p><%= truncate(post.description.to_plain_text, length: 180) %></p>
   <p><%= publication_status(post) %> · <%= t("posts.by_author", author: post.user.name) %></p>
 </article>
