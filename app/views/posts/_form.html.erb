@@ -15,7 +15,7 @@
     <%= form.label :description, class: "form-label" %>
     <%= form.rich_text_area :description, required: true %>
   </div>
-  <p><%= form.label :user_id, "Author" %><br><%= form.collection_select :user_id, users, :id, :name, { prompt: "Choose an author" }, required: true %></p>
+  <p><%= label_tag :author, "Author" %><br><%= text_field_tag :author, current_user.name, readonly: true %></p>
   <p><%= form.check_box :published %> <%= form.label :published %></p>
   <%= form.submit %>
 <% end %>

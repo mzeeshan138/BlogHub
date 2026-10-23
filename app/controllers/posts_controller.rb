@@ -16,35 +16,32 @@ class PostsController < ApplicationController
   end
 
   def new
-    @post = Post.new
+    @post = Post.new(user: current_user)
     authorize @post
-    load_users
   end
 
   def create
     @post = Post.new(post_params)
-    @post.user = current_user unless current_user.admin?
+    @post.user = current_user
     authorize @post
 
     if @post.save
       redirect_to posts_path, notice: "Post was successfully created."
     else
-      load_users
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
     authorize @post
-    load_users
   end
 
   def update
     authorize @post
+    @post.user = current_user
     if @post.update(post_params)
       redirect_to post_path(@post), notice: "Post was successfully updated."
     else
-      load_users
       render :edit, status: :unprocessable_entity
     end
   end
@@ -72,12 +69,6 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    permitted_attributes = [:title, :description, :published]
-    permitted_attributes << :user_id if current_user.admin?
-    params.expect(post: permitted_attributes)
-  end
-
-  def load_users
-    @users = User.order(:name)
+    params.expect(post: [:title, :description, :published])
   end
 end
