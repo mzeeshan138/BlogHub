@@ -22,12 +22,12 @@ Use the repository's `bin/` wrappers and run the checks relevant to the change:
 
 | Check | Command |
 | --- | --- |
-| Full test suite | `bin/rails db:test:prepare test` |
-| System tests | `bin/rails db:test:prepare test:system` |
-| Ruby lint | `bin/rubocop` |
-| Rails security scan | `bin/brakeman --no-pager` |
-| JavaScript dependency audit | `bin/importmap audit` |
-| Ruby dependency audit | `bin/bundler-audit` |
+| Full test suite | `rails db:test:prepare test` |
+| System tests | `rails db:test:prepare test:system` |
+| Ruby lint | `rubocop` |
+| Rails security scan | `brakeman --no-pager` |
+| JavaScript dependency audit | `importmap audit` |
+| Ruby dependency audit | `bundler-audit` |
 
 These match the checks configured in `.github/workflows/ci.yml`. Report which commands were run and whether they passed. If the environment prevents a check, say so plainly; do not imply it passed.
 
