@@ -33,3 +33,32 @@
   width: fit-content;
   cursor: pointer;
 }
+
+.avatar-preview {
+  width: 160px;
+  height: 160px;
+}
+
+.avatar-image,
+.avatar-placeholder {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  display: grid;
+  place-items: center;
+  background: #e9ecef;
+  color: #6c757d;
+  font-size: 4rem;
+}
+
+.avatar-placeholder-sm {
+  display: inline-grid;
+  width: 48px;
+  height: 48px;
+  font-size: 1.5rem;
+  vertical-align: middle;
+}

@@ -20,6 +20,22 @@
             <%= form.select :role, User.roles.keys.map { |role| [role.humanize, role] }, {}, class: "form-select" %>
           </div>
 
+          <div class="mb-3" data-controller="avatar-preview">
+            <%= form.label :avatar, "Profile image", class: "form-label" %>
+            <div class="avatar-preview mb-3" aria-live="polite">
+              <% if @user.avatar.attached? && @user.avatar.blob.persisted? %>
+                <%= image_tag @user.avatar, class: "avatar-image", width: 160, height: 160, alt: "Current profile image", data: { avatar_preview_target: "image" } %>
+                <div class="avatar-placeholder d-none" data-avatar-preview-target="placeholder" aria-hidden="true">&#128100;</div>
+              <% else %>
+                <%= tag.img class: "avatar-image d-none", width: 160, height: 160, alt: "Selected profile image", data: { avatar_preview_target: "image" } %>
+                <div class="avatar-placeholder" data-avatar-preview-target="placeholder" role="img" aria-label="Default profile image">&#128100;</div>
+              <% end %>
+            </div>
+            <%= form.file_field :avatar, accept: "image/png,image/jpeg,image/gif", class: "visually-hidden", data: { avatar_preview_target: "input", action: "change->avatar-preview#update" } %>
+            <%= form.label :avatar, "Upload image", class: "btn btn-outline-primary" %>
+            <div class="form-text">PNG, JPEG, or GIF up to 5 MB.</div>
+          </div>
+
           <div class="d-flex gap-2">
             <%= form.submit "Update user", class: "btn btn-primary" %>
             <%= link_to "Back", users_path, class: "btn btn-outline-secondary" %>

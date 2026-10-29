@@ -142,6 +142,7 @@ erDiagram
     POSTS ||--o{ ATTACHMENTS : attachable
     ARTICLES ||--o{ ATTACHMENTS : attachable
     USERS ||--o{ ATTACHMENTS : attachable
+    USERS ||--o| ACTIVE_STORAGE_ATTACHMENTS : avatar
 
     POSTS ||--o| ACTION_TEXT_RICH_TEXTS : description
 

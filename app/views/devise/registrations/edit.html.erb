@@ -5,7 +5,7 @@
         <div class="card-body p-4 p-lg-5">
           <h2 class="mb-4 text-center">Edit profile</h2>
 
-          <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, multipart: true }, data: { controller: "avatar-preview" }) do |f| %>
             <%= render "devise/shared/error_messages", resource: resource %>
 
             <div class="mb-3">
@@ -16,6 +16,22 @@
             <div class="mb-3">
               <%= f.label :email, class: "form-label" %>
               <%= f.email_field :email, autocomplete: "email", class: "form-control" %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :avatar, "Profile image", class: "form-label" %>
+              <div class="avatar-preview mb-3" aria-live="polite">
+                <% if resource.avatar.attached? && resource.avatar.blob.persisted? %>
+                  <%= image_tag resource.avatar, class: "avatar-image", width: 160, height: 160, alt: "Current profile image", data: { avatar_preview_target: "image" } %>
+                  <div class="avatar-placeholder d-none" data-avatar-preview-target="placeholder" aria-hidden="true">&#128100;</div>
+                <% else %>
+                  <%= tag.img class: "avatar-image d-none", width: 160, height: 160, alt: "Selected profile image", data: { avatar_preview_target: "image" } %>
+                  <div class="avatar-placeholder" data-avatar-preview-target="placeholder" role="img" aria-label="Default profile image">&#128100;</div>
+                <% end %>
+              </div>
+              <%= f.file_field :avatar, accept: "image/png,image/jpeg,image/gif", class: "visually-hidden", data: { avatar_preview_target: "input", action: "change->avatar-preview#update" } %>
+              <%= f.label :avatar, "Upload image", class: "btn btn-outline-primary" %>
+              <div class="form-text">PNG, JPEG, or GIF up to 5 MB.</div>
             </div>
 
             <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>

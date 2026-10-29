@@ -1,5 +1,10 @@
 <div class="card shadow-sm border-0">
   <div class="card-body p-4">
+    <% if @user.avatar.attached? && @user.avatar.blob.persisted? %>
+      <%= image_tag @user.avatar, class: "rounded-circle mb-3", width: 160, height: 160, alt: "Profile image for #{@user.name}" %>
+    <% else %>
+      <div class="avatar-placeholder mb-3" role="img" aria-label="Default profile image">&#128100;</div>
+    <% end %>
     <h1 class="mb-3"><%= @user.name %></h1>
     <p><strong>Email:</strong> <%= @user.email %></p>
     <p><strong>Role:</strong> <span class="badge bg-primary"><%= @user.role %></span></p>

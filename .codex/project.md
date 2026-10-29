@@ -36,6 +36,6 @@ Routes describe available endpoints; inspect controllers, policies, and tests to
 - `Article` and `ArticleComment` form a separate article/comment pair.
 - `UserGroup` joins users to groups.
 - `Like` is polymorphic over its likeable target. `Attachment` is polymorphic over its attachable target.
-- Devise provides authentication. Pundit provides authorization; authentication alone does not grant access to a record.
+- Devise provides authentication. Pundit provides authorization; authentication alone does not grant access to a record. Users can upload a profile image through their authorized user edit page using Active Storage (`User#avatar`).
 
 Confirm these details in the current model associations, schema, and tests before relying on them. Update the ERD when a schema relationship changes.

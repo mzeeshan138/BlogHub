@@ -18,7 +18,7 @@ class UsersController < ApplicationController
     authorize @user
 
     if @user.update(user_params)
-      redirect_to users_path, notice: "User was successfully updated."
+      redirect_to user_path(@user), notice: "User was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -37,6 +37,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :email, :role)
+    params.require(:user).permit(:name, :email, :role, :avatar)
   end
 end

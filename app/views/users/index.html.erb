@@ -7,6 +7,7 @@
     <table class="table table-striped mb-0 align-middle">
       <thead class="table-dark">
         <tr>
+          <th>Image</th>
           <th>Name</th>
           <th>Email</th>
           <th>Role</th>
@@ -16,6 +17,13 @@
       <tbody>
         <% @users.each do |user| %>
           <tr>
+            <td>
+              <% if user.avatar.attached? && user.avatar.blob.persisted? %>
+                <%= image_tag user.avatar, class: "rounded-circle", width: 48, height: 48, alt: "Profile image for #{user.name}" %>
+              <% else %>
+                <span class="avatar-placeholder avatar-placeholder-sm" role="img" aria-label="Default profile image">&#128100;</span>
+              <% end %>
+            </td>
             <td><%= user.name %></td>
             <td><%= user.email %></td>
             <td>
