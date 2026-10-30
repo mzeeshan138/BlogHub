@@ -22,7 +22,7 @@ This is a server-rendered blog application built with Ruby on Rails 8.1 and Ruby
 
 ## Application entry points
 
-- The root route renders the posts index (`PostsController#index`).
+- The root route renders the posts index (`PostsController#index`); unmatched URLs render the branded 404 page through `ErrorsController#not_found`.
 - Post routes include a management page and a member action to toggle publication; comments can be created or deleted under a post.
 - Articles, article comments, users, groups, group memberships, likes, and attachments have resource routes.
 - Devise supplies user routes and the Rails health endpoint is available at `/up`.

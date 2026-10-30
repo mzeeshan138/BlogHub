@@ -21,4 +21,6 @@ Rails.application.routes.draw do
   resources :attachments
 
   root "posts#index"
+
+  match "*unmatched_route", to: "errors#not_found", via: :all
 end
