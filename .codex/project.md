@@ -4,7 +4,7 @@ This is a Rails blog  application with posts as its root page and additional art
 
 ## Purpose and stack
 
-This is a server-rendered blog application built with Ruby on Rails 8.1 and Ruby 4.0.7. It uses SQLite, Devise authentication, Pundit authorization, Action Text, Active Storage, Rails Solid adapters for jobs, cache, and Action Cable, and Bootstrap 5.3.3 loaded from jsDelivr. Custom application styles are in `app/assets/stylesheets/application.css` and are served through Propshaft. The shared header and admin sidebar use a bright blue-purple gradient theme with interactive hover and active states. Admin tables use light blue-gray headings, and the admin dashboard intentionally removes extra top padding for a compact layout.
+This is a server-rendered blog application built with Ruby on Rails 8.1 and Ruby 4.0.7. It uses SQLite, Devise authentication, Pundit authorization, Action Text, Active Storage, Rails Solid adapters for jobs, cache, and Action Cable, and Bootstrap 5.3.3 loaded from jsDelivr. Custom application styles are in `app/assets/stylesheets/application.css` and are served through Propshaft. The shared header and admin sidebar use a bright blue-purple gradient theme with interactive hover and active states. Admin tables use light blue-gray headings, and the admin content area includes responsive top padding below the header.
 <!-- The production container is defined by `Dockerfile`; deployment configuration is in `.kamal/` and `config/deploy.yml`. -->
 
 ## Architecture map
@@ -36,6 +36,6 @@ Routes describe available endpoints; inspect controllers, policies, and tests to
 - `Article` and `ArticleComment` form a separate article/comment pair.
 - `UserGroup` joins users to groups.
 - `Like` is polymorphic over its likeable target. `Attachment` is polymorphic over its attachable target.
-- Devise provides authentication. Pundit provides authorization; authentication alone does not grant access to a record. Users can update their profile through Devise's registration routes, while admin-only user management (including role changes) is under the `/admin/users` namespace. Users can upload a profile image through their authorized profile page using Active Storage (`User#avatar`). Admin dashboard access is authorized by `DashboardPolicy`; signed-in users see an avatar dropdown in the application header, while admins see dashboard navigation links.
+- Devise provides authentication. Pundit provides authorization; authentication alone does not grant access to a record. Users can update their profile through Devise's registration routes, while admin-only user management (including role changes, profile display, and editing) is under the `/admin/users` namespace. Users can upload a profile image through their authorized profile page using Active Storage (`User#avatar`). Admin dashboard access is authorized by `DashboardPolicy`; signed-in users see an avatar dropdown in the application header, while admins see dashboard navigation links.
 
 Confirm these details in the current model associations, schema, and tests before relying on them. Update the ERD when a schema relationship changes.
