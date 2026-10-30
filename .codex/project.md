@@ -24,7 +24,7 @@ This is a server-rendered blog application built with Ruby on Rails 8.1 and Ruby
 
 - The root route renders the posts index (`PostsController#index`); unmatched URLs render the branded 404 page through `ErrorsController#not_found`.
 - Post routes include a management page and a member action to toggle publication; comments can be created or deleted under a post.
-- Articles, article comments, users, groups, group memberships, likes, and attachments have resource routes. Admins also have a protected `/admin/dashboard` endpoint with dashboard statistics and a shared admin sidebar for dashboard, home, post creation, user management, and post management. Admin post management supports admin-scoped show and edit pages inside the dashboard content area.
+- Articles, article comments, users, groups, group memberships, likes, and attachments have resource routes. Admins also have a protected `/admin/dashboard` endpoint with dashboard statistics and a shared admin sidebar for dashboard, home, post creation, user management, and post management. Admin post management supports admin-scoped new, show, and edit pages inside the dashboard content area.
 - Devise supplies user routes and the Rails health endpoint is available at `/up`.
 
 Routes describe available endpoints; inspect controllers, policies, and tests to confirm actual access rules and behavior.

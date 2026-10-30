@@ -49,4 +49,13 @@ class AdminPostsControllerTest < ActionDispatch::IntegrationTest
     assert_select ".admin-content form[action='#{admin_post_path(@post)}'][method='post']"
     assert_select ".admin-content input[name='post[title]']"
   end
+
+  test "new displays the post form in admin content" do
+    get admin_new_post_path
+
+    assert_response :success
+    assert_select ".admin-content h1", text: "New post"
+    assert_select ".admin-content form[action='#{admin_posts_path}'][method='post']"
+    assert_select ".admin-content input[name='post[title]'].form-control.w-100"
+  end
 end

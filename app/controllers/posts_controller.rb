@@ -26,7 +26,7 @@ class PostsController < ApplicationController
     authorize @post
 
     if @post.save
-      redirect_to posts_path, notice: "Post was successfully created."
+      redirect_to admin_post_request? ? admin_posts_path : posts_path, notice: "Post was successfully created."
     else
       render :new, status: :unprocessable_entity
     end

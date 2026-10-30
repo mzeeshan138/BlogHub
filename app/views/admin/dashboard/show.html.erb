@@ -3,7 +3,7 @@
     <h1 class="mb-1">Dashboard</h1>
     <p class="text-muted mb-0">Welcome back, <%= current_user.name.presence || current_user.email %>.</p>
   </div>
-  <%= link_to "Create post", new_post_path, class: "btn btn-primary" %>
+  <%= link_to "Create post", admin_new_post_path, class: "btn btn-primary" %>
 </div>
 
 <div class="row g-3 mb-4">
