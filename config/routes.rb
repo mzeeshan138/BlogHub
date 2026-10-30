@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   namespace :admin do
     get "dashboard", to: "dashboard#show", as: :dashboard
     resources :users, only: %i[index show edit update destroy]
+    get "profile/password/edit", to: "users#password_edit", as: :edit_password
+    patch "profile/password", to: "users#password_update", as: :password
     get "posts", to: "/posts#manage", as: :posts
     post "posts", to: "/posts#create"
     get "posts/new", to: "/posts#new", as: :new_post

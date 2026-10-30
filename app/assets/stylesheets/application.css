@@ -149,6 +149,12 @@
   box-shadow: 0 0.35rem 0.75rem rgba(13, 110, 253, 0.18);
 }
 
+.admin-sidebar-divider {
+  height: 1px;
+  margin: 0.75rem 0;
+  background-color: #cbd9f2;
+}
+
 .admin-sidebar-button {
   width: 100%;
   border: 0;

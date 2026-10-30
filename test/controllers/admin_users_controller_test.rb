@@ -32,6 +32,17 @@ class AdminUsersControllerTest < ActionDispatch::IntegrationTest
     assert_select "a[href='#{edit_admin_user_path(@user)}']", text: "Edit"
   end
 
+  test "admin sidebar includes profile links around the logout action" do
+    get admin_dashboard_path
+
+    assert_response :success
+    assert_select ".admin-sidebar a[href='#{admin_user_path(@admin)}']", text: "Profile"
+    assert_select ".admin-sidebar a[href='#{edit_admin_user_path(@admin)}']", text: "Edit profile"
+    assert_select ".admin-sidebar a[href='#{admin_edit_password_path}']", text: "Update password"
+    assert_select ".admin-sidebar .admin-sidebar-divider", count: 2
+    assert_select ".admin-sidebar form[action='#{destroy_user_session_path}']"
+  end
+
   test "show displays the user profile and edit action in admin content" do
     get admin_user_path(@user)
 
@@ -49,5 +60,16 @@ class AdminUsersControllerTest < ActionDispatch::IntegrationTest
     assert_select ".admin-content form[action='#{admin_user_path(@user)}'][method='post']"
     assert_select ".admin-content input[name='user[name]']"
     assert_select ".admin-content input[name='user[email]']"
+  end
+
+  test "password edit displays the password form in admin content" do
+    get admin_edit_password_path
+
+    assert_response :success
+    assert_select ".admin-content h1", text: "Update password"
+    assert_select ".admin-content form[action='#{admin_password_path}'][method='post']"
+    assert_select ".admin-content input[name='user[current_password]']"
+    assert_select ".admin-content input[name='user[password]']"
+    assert_select ".admin-content input[name='user[password_confirmation]']"
   end
 end

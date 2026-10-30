@@ -15,6 +15,22 @@ module Admin
       authorize @user
     end
 
+    def password_edit
+      authorize :dashboard, :show?
+      @user = current_user
+    end
+
+    def password_update
+      authorize :dashboard, :show?
+      @user = current_user
+
+      if @user.update_with_password(password_params)
+        redirect_to admin_user_path(@user), notice: "Password was successfully updated."
+      else
+        render :password_edit, status: :unprocessable_entity
+      end
+    end
+
     def update
       authorize @user
 
@@ -39,6 +55,10 @@ module Admin
 
     def user_params
       params.require(:user).permit(:name, :email, :role, :avatar)
+    end
+
+    def password_params
+      params.require(:user).permit(:current_password, :password, :password_confirmation)
     end
   end
 end
