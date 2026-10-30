@@ -35,8 +35,8 @@
                 <li class="nav-item"><%= link_to "New Post", new_post_path, class: "nav-link" %></li>
               <% end %>
               <% if current_user.admin? %>
-                <li class="nav-item"><%= link_to "Manage Users", users_path, class: "nav-link" %></li>
-                <li class="nav-item"><%= link_to "Manage Posts", manage_posts_path, class: "nav-link" %></li>
+                <li class="nav-item"><%= link_to "Manage Users", admin_users_path, class: "nav-link" %></li>
+                <li class="nav-item"><%= link_to "Manage Posts", admin_posts_path, class: "nav-link" %></li>
               <% end %>
             <% end %>
           </ul>

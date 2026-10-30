@@ -1,21 +1,20 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  get "manage/posts", to: "posts#manage", as: :manage_posts
+  namespace :admin do
+    resources :users, only: %i[index show edit update destroy]
+    get "posts", to: "/posts#manage", as: :posts
+  end
 
   get "up" => "rails/health#show", as: :rails_health_check
 
   resources :posts do
-    member do
-      patch :toggle_published
-    end
-
+    member { patch :toggle_published }
     resources :comments, only: %i[create destroy]
   end
 
   resources :articles
   resources :article_comments
-  resources :users
   resources :groups
   resources :user_groups
   resources :likes
