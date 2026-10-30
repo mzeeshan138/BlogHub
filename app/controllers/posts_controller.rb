@@ -40,7 +40,7 @@ class PostsController < ApplicationController
     authorize @post
     @post.user = current_user
     if @post.update(post_params)
-      redirect_to post_path(@post), notice: "Post was successfully updated."
+      redirect_to admin_post_request? ? admin_post_path(@post) : post_path(@post), notice: "Post was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -49,7 +49,7 @@ class PostsController < ApplicationController
   def destroy
     authorize @post
     @post.destroy
-    redirect_to posts_path, notice: "Post was successfully deleted."
+    redirect_to admin_post_request? ? admin_posts_path : posts_path, notice: "Post was successfully deleted."
   end
 
   def toggle_published
@@ -57,7 +57,7 @@ class PostsController < ApplicationController
     @post.update!(published: !@post.published?)
 
     respond_to do |format|
-      format.html { redirect_to post_path(@post), notice: "Post publication status updated." }
+      format.html { redirect_to admin_post_request? ? admin_post_path(@post) : post_path(@post), notice: "Post publication status updated." }
       format.turbo_stream
     end
   end
@@ -70,5 +70,9 @@ class PostsController < ApplicationController
 
   def post_params
     params.expect(post: [:title, :description, :published])
+  end
+
+  def admin_post_request?
+    request.path.start_with?("/admin/posts")
   end
 end
