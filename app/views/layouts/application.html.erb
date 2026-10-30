@@ -21,52 +21,82 @@
 
   <body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
-      <div class="container">
+      <div class="container justify-content-between">
         <%= link_to "BlogHub", root_path, class: "navbar-brand fw-bold" %>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="mainNavbar">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item"><%= link_to "Home", root_path, class: "nav-link" %></li>
-            <% if user_signed_in? %>
-              <% if current_user.admin? || current_user.author? %>
-                <li class="nav-item"><%= link_to "New Post", new_post_path, class: "nav-link" %></li>
-              <% end %>
-              <% if current_user.admin? %>
-                <li class="nav-item"><%= link_to "Manage Users", admin_users_path, class: "nav-link" %></li>
-                <li class="nav-item"><%= link_to "Manage Posts", admin_posts_path, class: "nav-link" %></li>
-              <% end %>
-            <% end %>
-          </ul>
-
-          <div class="d-flex align-items-center gap-2">
-            <% if user_signed_in? %>
-              <span class="navbar-text text-white-50 me-2">
-                Hello, <%= current_user.name.presence || current_user.email %>
-              </span>
-              <%= link_to "Edit profile", edit_user_registration_path, class: "btn btn-outline-light btn-sm" %>
-              <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-outline-light btn-sm" %>
-            <% else %>
-              <%= link_to "Sign in", new_user_session_path, class: "btn btn-outline-light btn-sm" %>
-              <%= link_to "Sign up", new_user_registration_path, class: "btn btn-light btn-sm" %>
-            <% end %>
-          </div>
+        <div class="d-flex align-items-center gap-2">
+          <% if user_signed_in? %>
+              <div class="dropdown" data-controller="profile-dropdown" data-action="click@window->profile-dropdown#closeIfOutside keydown.esc@window->profile-dropdown#close">
+                <button class="btn btn-dark dropdown-toggle d-flex align-items-center gap-2 profile-menu" type="button" aria-expanded="false" data-action="profile-dropdown#toggle" data-profile-dropdown-target="button">
+                  <% if current_user.avatar.attached? && current_user.avatar.blob.persisted? %>
+                    <%= image_tag current_user.avatar, class: "profile-avatar", width: 36, height: 36, alt: "Profile image for #{current_user.name}" %>
+                  <% else %>
+                    <span class="profile-avatar profile-avatar-placeholder" role="img" aria-label="Default profile image">&#128100;</span>
+                  <% end %>
+                  <span class="d-none d-sm-inline"><%= current_user.name.presence || current_user.email %></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm" data-profile-dropdown-target="menu">
+                  <li><h6 class="dropdown-header"><%= current_user.email %></h6></li>
+                  <li><%= link_to "View profile", edit_user_registration_path, class: "dropdown-item" %></li>
+                  <% if current_user.admin? %>
+                    <li><%= link_to "Dashboard", admin_dashboard_path, class: "dropdown-item" %></li>
+                  <% end %>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><%= button_to "Logout", destroy_user_session_path, method: :delete, class: "dropdown-item text-danger" %></li>
+                </ul>
+              </div>
+          <% else %>
+            <%= link_to "Sign in", new_user_session_path, class: "btn btn-outline-light btn-sm" %>
+            <%= link_to "Sign up", new_user_registration_path, class: "btn btn-light btn-sm" %>
+          <% end %>
         </div>
       </div>
     </nav>
 
-    <main class="container py-4">
-      <% flash.each do |type, message| %>
-        <% next if message.blank? %>
-        <div class="alert alert-<%= flash_class(type) %> alert-dismissible fade show" role="alert">
-          <%= message %>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-      <% end %>
+    <main class="<%= admin_area? ? 'container-fluid px-0' : 'container' %> py-4">
+      <% if admin_area? %>
+        <div class="admin-shell">
+          <aside class="admin-sidebar" aria-label="Admin navigation">
+            <div class="admin-sidebar-heading">Administration</div>
+            <nav class="nav flex-column gap-1">
+              <%= link_to admin_dashboard_path, class: "admin-sidebar-link #{'active' if current_page?(admin_dashboard_path)}" do %>
+                <span class="sidebar-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5v8a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></span><span>Dashboard</span>
+              <% end %>
+              <%= link_to new_post_path, class: "admin-sidebar-link #{'active' if current_page?(new_post_path)}" do %>
+                <span class="sidebar-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span><span>New post</span>
+              <% end %>
+              <%= link_to admin_users_path, class: "admin-sidebar-link #{'active' if current_page?(admin_users_path) || request.path.start_with?('/admin/users/')}" do %>
+                <span class="sidebar-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M5 20c.7-3.4 3.1-5 7-5s6.3 1.6 7 5"/></svg></span><span>Manage users</span>
+              <% end %>
+              <%= link_to admin_posts_path, class: "admin-sidebar-link #{'active' if current_page?(admin_posts_path)}" do %>
+                <span class="sidebar-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="16" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><span>Manage posts</span>
+              <% end %>
+              <%= button_to destroy_user_session_path, method: :delete, class: "admin-sidebar-link admin-sidebar-button" do %>
+                <span class="sidebar-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5M15 16l4-4-4-4M19 12H9"/></svg></span><span>Logout</span>
+              <% end %>
+            </nav>
+          </aside>
 
-      <%= yield %>
+          <section class="admin-content">
+            <% flash.each do |type, message| %>
+              <% next if message.blank? %>
+              <div class="alert alert-<%= flash_class(type) %> alert-dismissible fade show" role="alert">
+                <%= message %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            <% end %>
+            <%= yield %>
+          </section>
+        </div>
+      <% else %>
+        <% flash.each do |type, message| %>
+          <% next if message.blank? %>
+          <div class="alert alert-<%= flash_class(type) %> alert-dismissible fade show" role="alert">
+            <%= message %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        <% end %>
+        <%= yield %>
+      <% end %>
     </main>
 
     <footer class="border-top bg-white mt-5">

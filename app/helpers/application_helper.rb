@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def admin_area?
+    user_signed_in? && current_user.admin? && request.path.start_with?("/admin")
+  end
+
   def publication_status(post)
     t(post.published? ? "posts.status.published" : "posts.status.draft")
   end

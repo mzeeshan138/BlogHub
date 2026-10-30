@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   namespace :admin do
+    get "dashboard", to: "dashboard#show", as: :dashboard
     resources :users, only: %i[index show edit update destroy]
     get "posts", to: "/posts#manage", as: :posts
   end

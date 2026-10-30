@@ -24,7 +24,7 @@ This is a server-rendered blog application built with Ruby on Rails 8.1 and Ruby
 
 - The root route renders the posts index (`PostsController#index`); unmatched URLs render the branded 404 page through `ErrorsController#not_found`.
 - Post routes include a management page and a member action to toggle publication; comments can be created or deleted under a post.
-- Articles, article comments, users, groups, group memberships, likes, and attachments have resource routes.
+- Articles, article comments, users, groups, group memberships, likes, and attachments have resource routes. Admins also have a protected `/admin/dashboard` endpoint with dashboard statistics and a shared admin sidebar for dashboard, home, post creation, user management, and post management.
 - Devise supplies user routes and the Rails health endpoint is available at `/up`.
 
 Routes describe available endpoints; inspect controllers, policies, and tests to confirm actual access rules and behavior.
@@ -36,6 +36,6 @@ Routes describe available endpoints; inspect controllers, policies, and tests to
 - `Article` and `ArticleComment` form a separate article/comment pair.
 - `UserGroup` joins users to groups.
 - `Like` is polymorphic over its likeable target. `Attachment` is polymorphic over its attachable target.
-- Devise provides authentication. Pundit provides authorization; authentication alone does not grant access to a record. Users can update their profile through Devise's registration routes, while admin-only user management (including role changes) is under the `/admin/users` namespace. Users can upload a profile image through their authorized profile page using Active Storage (`User#avatar`).
+- Devise provides authentication. Pundit provides authorization; authentication alone does not grant access to a record. Users can update their profile through Devise's registration routes, while admin-only user management (including role changes) is under the `/admin/users` namespace. Users can upload a profile image through their authorized profile page using Active Storage (`User#avatar`). Admin dashboard access is authorized by `DashboardPolicy`; signed-in users see an avatar dropdown in the application header, while admins see dashboard navigation links.
 
 Confirm these details in the current model associations, schema, and tests before relying on them. Update the ERD when a schema relationship changes.
