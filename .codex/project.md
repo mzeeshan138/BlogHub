@@ -4,7 +4,7 @@ This is a Rails blog  application with posts as its root page and additional art
 
 ## Purpose and stack
 
-This is a server-rendered blog application built with Ruby on Rails 8.1 and Ruby 4.0.7. It uses SQLite, Devise authentication, Pundit authorization, Action Text, Active Storage, and Rails Solid adapters for jobs, cache, and Action Cable.
+This is a server-rendered blog application built with Ruby on Rails 8.1 and Ruby 4.0.7. It uses SQLite, Devise authentication, Pundit authorization, Action Text, Active Storage, Rails Solid adapters for jobs, cache, and Action Cable, and Bootstrap 5.3.3 loaded from jsDelivr. Custom application styles are in `app/assets/stylesheets/application.css` and are served through Propshaft. The shared header and admin sidebar use a bright blue-purple gradient theme with interactive hover and active states. Admin tables use light blue-gray headings, and the admin dashboard intentionally removes extra top padding for a compact layout.
 <!-- The production container is defined by `Dockerfile`; deployment configuration is in `.kamal/` and `config/deploy.yml`. -->
 
 ## Architecture map

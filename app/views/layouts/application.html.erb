@@ -20,13 +20,13 @@
   </head>
 
   <body class="bg-light">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark blog-header shadow-sm sticky-top">
       <div class="container justify-content-between">
         <%= link_to "BlogHub", root_path, class: "navbar-brand fw-bold" %>
         <div class="d-flex align-items-center gap-2">
           <% if user_signed_in? %>
               <div class="dropdown" data-controller="profile-dropdown" data-action="click@window->profile-dropdown#closeIfOutside keydown.esc@window->profile-dropdown#close">
-                <button class="btn btn-dark dropdown-toggle d-flex align-items-center gap-2 profile-menu" type="button" aria-expanded="false" data-action="profile-dropdown#toggle" data-profile-dropdown-target="button">
+                <button class="btn blog-profile-button dropdown-toggle d-flex align-items-center gap-2 profile-menu" type="button" aria-expanded="false" data-action="profile-dropdown#toggle" data-profile-dropdown-target="button">
                   <% if current_user.avatar.attached? && current_user.avatar.blob.persisted? %>
                     <%= image_tag current_user.avatar, class: "profile-avatar", width: 36, height: 36, alt: "Profile image for #{current_user.name}" %>
                   <% else %>
@@ -52,7 +52,7 @@
       </div>
     </nav>
 
-    <main class="<%= admin_area? ? 'container-fluid px-0' : 'container' %> py-4">
+    <main class="<%= admin_area? ? 'container-fluid px-0 admin-main' : 'container py-4' %>">
       <% if admin_area? %>
         <div class="admin-shell">
           <aside class="admin-sidebar" aria-label="Admin navigation">
