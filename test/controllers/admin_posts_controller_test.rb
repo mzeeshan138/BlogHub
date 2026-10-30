@@ -31,6 +31,17 @@ class AdminPostsControllerTest < ActionDispatch::IntegrationTest
     assert_select "a[href='#{admin_edit_post_path(@post)}']", text: "Edit"
   end
 
+  test "toggling publication from manage posts replaces the post row" do
+    patch admin_toggle_published_post_path(@post), headers: { "Accept" => "text/vnd.turbo-stream.html" }
+
+    assert_response :success
+    assert_equal false, @post.reload.published?
+    assert_includes response.body, "replace"
+    assert_includes response.body, "manage_post_#{@post.id}"
+    assert_includes response.body, "Publish"
+    assert_includes response.body, "Draft"
+  end
+
   test "show displays the post with edit and admin back actions" do
     get admin_post_path(@post)
 

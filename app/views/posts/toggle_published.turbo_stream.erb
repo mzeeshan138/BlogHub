@@ -1,1 +1,5 @@
-<%= turbo_stream.replace "published_toggle", partial: "posts/published_toggle", locals: { post: @post } %>
+<% if admin_post_request? %>
+  <%= turbo_stream.replace dom_id(@post, :manage), partial: "posts/manage_row", locals: { post: @post } %>
+<% else %>
+  <%= turbo_stream.replace "published_toggle", partial: "posts/published_toggle", locals: { post: @post } %>
+<% end %>

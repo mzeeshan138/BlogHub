@@ -43,6 +43,13 @@ class AdminUsersControllerTest < ActionDispatch::IntegrationTest
     assert_select ".admin-sidebar form[action='#{destroy_user_session_path}']"
   end
 
+  test "admin profile dropdown opens the same profile page as the sidebar" do
+    get admin_dashboard_path
+
+    assert_response :success
+    assert_select ".dropdown-menu a[href='#{admin_user_path(@admin)}']", text: "View profile"
+  end
+
   test "show displays the user profile and edit action in admin content" do
     get admin_user_path(@user)
 
