@@ -22,5 +22,7 @@ Rails.application.routes.draw do
 
   root "posts#index"
 
-  match "*unmatched_route", to: "errors#not_found", via: :all
+  constraints ->(request) { !request.path.start_with?("/rails/active_storage/") } do
+    match "*unmatched_route", to: "errors#not_found", via: :all
+  end
 end
