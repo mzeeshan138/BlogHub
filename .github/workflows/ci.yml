@@ -11,11 +11,12 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
+          ruby-version: .ruby-version
           bundler-cache: true
 
       - name: Scan for common Rails security vulnerabilities using static analysis
@@ -29,11 +30,12 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
+          ruby-version: .ruby-version
           bundler-cache: true
 
       - name: Scan for security vulnerabilities in JavaScript dependencies
@@ -45,11 +47,12 @@ jobs:
       RUBOCOP_CACHE_ROOT: tmp/rubocop
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
+          ruby-version: .ruby-version
           bundler-cache: true
 
       - name: Prepare RuboCop cache
@@ -79,11 +82,12 @@ jobs:
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y libvips
 
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
+          ruby-version: .ruby-version
           bundler-cache: true
 
       - name: Run tests
@@ -107,11 +111,12 @@ jobs:
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y libvips
 
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
+          ruby-version: .ruby-version
           bundler-cache: true
 
       - name: Run System Tests
